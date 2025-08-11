@@ -3,10 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>جاساز</title>
-  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b74de">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="manifest" href="/manifest.json">
+  <title>جاساز دکتر مجید فیاض‌پور</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      margin: 20px;
+    }
+    input, textarea, button {
+      display: block;
+      margin-top: 10px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background: #0b74de;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #095bb5;
+    }
+  </style>
 </head>
 <body>
-  <h1>سلام! این اپ جاساز است</h1>
+  <h1>جاساز دکتر مجید فیاض‌پور</h1>
+  <p>ذخیرهٔ نقطه با عکس - جستجو و راهنمایی با فلش - هشدار در نزدیکی</p>
+
+  <label>نام مکان</label>
+  <input type="text" id="placeName" placeholder="مثلاً: کلید زیر خاک">
+
+  <label>توضیحات (اختیاری)</label>
+  <textarea id="description" placeholder="مثلاً کنار درخت"></textarea>
+
+  <label>عکس (دوربین یا گالری)</label>
+  <input type="file" id="photo" accept="image/*">
+
+  <button onclick="saveLocation()">📍 ذخیره مکان فعلی</button>
+
+  <script>
+    function saveLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          alert('مکان ذخیره شد: ' + pos.coords.latitude + ', ' + pos.coords.longitude);
+        }, err => {
+          alert('خطا در گرفتن مکان: ' + err.message);
+        });
+      } else {
+        alert('GPS پشتیبانی نمی‌شود.');
+      }
+    }
+  </script>
+
+  <!-- ثبت Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(function(reg) {
+            console.log('Service Worker ثبت شد:', reg.scope);
+          })
+          .catch(function(err) {
+            console.log('ثبت Service Worker شکست خورد:', err);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
