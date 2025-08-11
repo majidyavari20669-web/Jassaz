@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>جاساز</title>
   <link rel="manifest" href="manifest.json">
-</head>
+</head> 
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Service Worker registered'));
+  </script>
 <body>
   <h1>سلام! این اپ جاساز است</h1>
 </body>
